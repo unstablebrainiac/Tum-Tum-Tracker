@@ -26,7 +26,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        getSupportActionBar().setTitle("Tum Tum Tracker");
+        getSupportActionBar().setTitle(R.string.app_name);
 
 
     }
@@ -52,7 +52,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       getMenuInflater().inflate(R.menu.settings_menu, menu);
+       getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
     @Override
