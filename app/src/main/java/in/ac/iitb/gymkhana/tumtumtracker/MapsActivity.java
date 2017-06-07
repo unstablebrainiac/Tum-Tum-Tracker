@@ -3,16 +3,20 @@ package in.ac.iitb.gymkhana.tumtumtracker;
 import android.Manifest;
 import android.app.ActionBar;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,7 +38,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         getSupportActionBar().setTitle(R.string.app_name);
 
-
+    }
+    public void zoomCurrent()
+    {
+        Location lo=mMap.getMyLocation();
+        LatLng ll=new LatLng(lo.getLatitude(),lo.getLongitude());
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ll,15));
     }
 
 
@@ -55,7 +64,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
                 mMap.getUiSettings().setZoomGesturesEnabled(true);
             } else {
                 Toast toast = Toast.makeText(this, "Need Permission", Toast.LENGTH_SHORT);
@@ -65,9 +74,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         else{
             mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
             mMap.getUiSettings().setZoomGesturesEnabled(true);
         }
+        FloatingActionButton fab=(FloatingActionButton) findViewById(R.id.fabLocation);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                zoomCurrent();
+            }
+
+        });
     }
     public void onRequestPermissionsResult (int requestCode,
                                            String[] permissions,
@@ -76,7 +94,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(grantResults[0]==PackageManager.PERMISSION_GRANTED)
         {
             mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
             mMap.getUiSettings().setZoomGesturesEnabled(true);
         }
         else
