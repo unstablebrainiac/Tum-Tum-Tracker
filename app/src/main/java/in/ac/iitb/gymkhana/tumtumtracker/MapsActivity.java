@@ -20,8 +20,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
-
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,ActivityCompat.OnRequestPermissionsResultCallback {
 
     private GoogleMap mMap;
@@ -55,7 +53,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
+                    == getPackageManager().PERMISSION_GRANTED) {
                 mMap.setMyLocationEnabled(true);
                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
                 mMap.getUiSettings().setZoomGesturesEnabled(true);
@@ -75,7 +73,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                            String[] permissions,
                                            int[] grantResults)
     {
-        if(grantResults[0]==PERMISSION_GRANTED)
+        if(grantResults[0]==getPackageManager().PERMISSION_GRANTED)
         {
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
